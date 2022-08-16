@@ -5,10 +5,10 @@
   publish = "out"
 
 [context.production]
-command = "npm run build && echo \"NEXTAUTH_URL=$URL\" > .env.local"
+command = "next build && echo \"NEXTAUTH_URL=$URL\" > .env.local"
 
 [context.deploy-preview]
-command = "npm run build && echo \"NEXTAUTH_URL=$DEPLOY_PRIME_URL\" > .env.local"
+command = "next build && echo \"NEXTAUTH_URL=$DEPLOY_PRIME_URL\" > .env.local"
 
   ## Uncomment to use this redirect for Single Page Applications like create-react-app.
   ## Not needed for static site generators.
