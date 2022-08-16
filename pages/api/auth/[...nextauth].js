@@ -1,5 +1,4 @@
 import NextAuth from "next-auth";
-import Auth0Provider from "next-auth/providers/auth0"
 import TwitterProvider from "next-auth/providers/twitter"
 
 export default NextAuth({
@@ -14,4 +13,5 @@ export default NextAuth({
           return session // The return type will match the one returned in `useSession()`
         },
       },
+      secret: process.env.SECRET
 })

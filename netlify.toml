@@ -2,7 +2,7 @@
 [build]
   command = "next build"
   functions = "functions"
-  publish = ".next"
+  publish = "out"
 
 [context.production]
 command = "npm run build && echo \"NEXTAUTH_URL=$URL\" > .env.local"
