@@ -10,11 +10,6 @@ command = "npm run build && echo \"NEXTAUTH_URL=$URL\" > .env.local"
 [context.deploy-preview]
 command = "npm run build && echo \"NEXTAUTH_URL=$DEPLOY_PRIME_URL\" > .env.local"
 
-[context.deploy-preview]
-command = "export NEXTAUTH_URL=$DEPLOY_PRIME_URL && npm run build"
-
-
-
   ## Uncomment to use this redirect for Single Page Applications like create-react-app.
   ## Not needed for static site generators.
   #[[redirects]]
