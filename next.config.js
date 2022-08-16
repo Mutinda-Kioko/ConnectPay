@@ -9,4 +9,7 @@ module.exports = {
       "abs.twimg.com",
     ],
   },
+  env: {
+    NEXTAUTH_URL: process.env.DEPLOY_PRIME_URL,
+  },
 }
