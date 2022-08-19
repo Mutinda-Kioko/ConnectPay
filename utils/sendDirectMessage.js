@@ -1,5 +1,5 @@
 export default function sendDirectMessage (recipient_id,senderTwitterHandle,sentAmount,method,recipientName){
-  const message = {"event": {"type": "message_create", "message_create": {"target": {"recipient_id": recipient_id}, "message_data": {"text":`Hello ${recipientName} 👋👋👋, @${senderTwitterHandle} has sent you ${sentAmount} USD through ${method}. Follow the link: https://twitter-pay.vercel.app/ to withdraw your money.Thank you  for using Connect Pay 🎁 @connectpayglob `}}}}
+  const message = {"event": {"type": "message_create", "message_create": {"target": {"recipient_id": recipient_id}, "message_data": {"text":`Hello ${recipientName} 👋👋👋, @${senderTwitterHandle} has sent you ${sentAmount} USD through ${method}. Follow the link: https://connectpay.vercel.app/ to withdraw your money.Thank you  for using Connect Pay 🎁 @connectpayglob `}}}}
     var myHeaders = new Headers();
     myHeaders.append("Cookie", "guest_id=v1%3A166081299054165841");
     myHeaders.append("Content-Type", "application/json");

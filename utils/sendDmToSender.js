@@ -1,5 +1,5 @@
 export default function sendDmToSender (sentAmount,method,senderId,senderName,recipientHandle){
-    const senderMessage = {"event": {"type": "message_create", "message_create": {"target": {"recipient_id":senderId}, "message_data": {"text": `Hello ${senderName} 👋👋👋, thank you for using Connect Pay 🎁 @connectpayglob. We have confirmed you have sent ${sentAmount} to  @${recipientHandle} through ${method}. For more information visit :  https://twitter-pay.vercel.app/ `}}}}
+    const senderMessage = {"event": {"type": "message_create", "message_create": {"target": {"recipient_id":senderId}, "message_data": {"text": `Hello ${senderName} 👋👋👋, thank you for using Connect Pay 🎁 @connectpayglob. We have confirmed you have sent ${sentAmount} to  @${recipientHandle} through ${method}. For more information visit : https://connectpay.vercel.app/ `}}}}
       var myHeaders = new Headers();
       myHeaders.append("Cookie", "guest_id=v1%3A166081299054165841");
       myHeaders.append("Content-Type", "application/json");
