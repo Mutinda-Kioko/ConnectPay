@@ -14,6 +14,9 @@ import SendGift from '../components/SendGift';
 import sendDirectMessage from '../utils/sendDirectMessage';
 import sendDmToSender from '../utils/sendDmToSender';
 import { useRouter } from 'next/router';
+import oauthSignature from 'oauth-signature'
+
+const crypto = require('crypto');
 
 const Home = () => {
   const router = useRouter();
@@ -23,6 +26,26 @@ const Home = () => {
   const [transactionSuccess, setTransactionSuccess] = useState(false)
   const [transactionAmount, setTransactionAmount] = useState("");
   const [method, setMethod] = useState("");
+  var nonceLen = 32;
+  const nonce = crypto.randomBytes(Math.ceil(nonceLen * 3 / 4))
+  .toString('base64')
+  .slice(0, nonceLen)
+  .replace(/\+/g, '0') 
+  .replace(/\//g, '0'); 
+  const timestamp= Math.floor((new Date()).getTime() / 1000);
+  const httpMethod='POST';
+  const url = 'https://api.twitter.com/1.1/direct_messages/events/new.json';
+  const parameters = {
+    oauth_consumer_key : 'o5jHfoPPfEk0v4ROr8Y9aCJuH',
+    oauth_token : '1235280018210770945-NPAENpHxLgKVqeeXZpp3xvT8YZEagm',
+    oauth_nonce : nonce,
+    oauth_timestamp : timestamp,
+    oauth_signature_method : 'HMAC-SHA1',
+    oauth_version : '1.0',
+}
+  const consumerSecret = 'xEeseUr9zvhlUHQ8mHpeJ5kGQm4SSI93tGSPmFlIl0LiT3hrcI';
+  const tokenSecret = '6THgCxlk5Od2QKhje4e420vtNjrylJ732XVtPjFCH5CVX'
+
   const setAmountToSend = amount => {
     if (!amount) return 
     if (amount > 0){
@@ -36,6 +59,7 @@ const closeHandler = () => {
 };
 const transactionComplete = (methods) => {
   setMethod(methods);
+  const  signature = oauthSignature.generate(httpMethod, url, parameters, consumerSecret, tokenSecret,{ encodeSignature: false});
   const recipient_id = sendTo[0]?.id;
   const senderTwitterHandle = session?.twitter?.twitterHandle;
   const sentAmount = transactionAmount;
@@ -44,13 +68,18 @@ const transactionComplete = (methods) => {
   const recipientName = sendTo[0]?.name;
   const senderName = session?.user?.name;
   const recipientHandle = sendTo[0]?.username;
-  sendDirectMessage(recipient_id?.toString(),senderTwitterHandle.toString(),sentAmount.toString(),method.toString(),recipientName.toString());
-  sendDmToSender(recipient_id?.toString(),senderTwitterHandle.toString(),sentAmount.toString(),method.toString(),senderId.toString(),senderName.toString(),recipientHandle.toString());
+  console.log("timestamp",timestamp);
+  console.log("signature",signature);
+  console.log("nonce",nonce);
+  console.log(senderId)
+  sendDirectMessage(recipient_id?.toString(),senderTwitterHandle.toString(),sentAmount.toString(),method.toString(),recipientName.toString(),timestamp,signature,nonce);
+  sendDmToSender(recipient_id?.toString(),senderTwitterHandle.toString(),sentAmount.toString(),method.toString(),senderId.toString(),senderName.toString(),recipientHandle.toString(),timestamp,signature,nonce);
   setVisible(true);
 }
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
       <Script async  src="https://pay.google.com/gp/p/js/pay.js"></Script>
+      <Script src="/bower_components/oauth-signature/dist/oauth-signature.js"></Script>
       <Script async  src="https://www.paypal.com/sdk/js?client-id=AURAbmTpw9F_QEMQrbaul0jFnOeNEfF3KUIwUESlNZAfbbjGQ5gw8Byh3cuxsmW8AKbr_8WaCrIvTU17&currency=USD"></Script>
       <Head>
         <title>Connect Pay</title>
