@@ -1,8 +1,8 @@
 import React from 'react'
-import { Modal, Button, Text, Input, Row } from "@nextui-org/react";
-import UserCard from './UserCard'
+import { Modal, Button, Text,} from "@nextui-org/react";
+import SearchObject from "./SearchObject"
 
-function SearchBar() {
+function SearchBar({sendTo,setSendTo}) {
  const [visible, setVisible] = React.useState(false);
   const handler = () => setVisible(true);
   const closeHandler = () => {
@@ -32,24 +32,7 @@ function SearchBar() {
           <Text id="modal-title" size={18}>Search a user</Text>
         </Modal.Header>
         <Modal.Body>
-          <Input
-            autoFocus
-            clearable
-            bordered
-            fullWidth
-            color="primary"
-            size="lg"
-            placeholder="User"
-          />
-          <div>
-          <Row>
-          <UserCard/>
-          </Row>
-          <Row>
-          <UserCard/>
-          </Row>
-          </div>
-
+          <SearchObject sendTo={sendTo} setSendTo={setSendTo} visible={visible} setVisible={setVisible}/>
         </Modal.Body>
         <Modal.Footer>
           <Button auto flat color="error" onClick={closeHandler}>

@@ -12,4 +12,9 @@ module.exports = {
   env: {
     NEXTAUTH_URL: process.env.DEPLOY_PRIME_URL,
   },
+  webpack: (config) => {
+    config.resolve.fallback = { fs: false };
+
+    return config;
+  },
 }

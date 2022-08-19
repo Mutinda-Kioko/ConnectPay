@@ -6,6 +6,7 @@ import { EyeIcon } from "./EyeIcon";
 import { EditIcon } from "./EditIcon";
 
 export default function Dashboard() {
+  const message = {"event": {"type": "message_create", "message_create": {"target": {"recipient_id": "1425724575418040328"}, "message_data": {"text": "Hello @drlases has sent you money through Paypal"}}}}
   const { setVisible, bindings } = useModal();
   const columns = [
     { name: "FROM", uid: "name" },

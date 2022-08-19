@@ -1,32 +1,18 @@
 import React, {useRef} from 'react'
 import Image from 'next/image';
-import { Modal, Input, Row, Checkbox, Button, Text } from "@nextui-org/react";
+import { Modal,Button} from "@nextui-org/react";
 import useWindowSize from 'react-use/lib/useWindowSize';
 import Confetti from 'react-confetti';
 import exportAsImage from '../utils/exportAsImage'
 
-function SendGift() {
+function SendGift({visible,setVisible,session, sendTo, transactionAmount,method}) {
     const exportRef = useRef();
     const { width, height } = useWindowSize()
-    const [visible, setVisible] = React.useState(false);
-  const handler = () => setVisible(true);
-  const closeHandler = () => {
-    setVisible(false);
+    const closeHandler = () => {
+    setVisible(!visible);
   };
   return (
-    <div>
-    <button onClick={handler} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
-  <Image src="/send.svg" alt='Send' width={20} height={20} />
-  <span>Send my Gift</span>
-</button>
-<Modal
-        closeButton
-        blur
-        noPadding
-        aria-labelledby="modal-title"
-        open={visible}
-        onClose={closeHandler}
-      >
+<>
 <Confetti
       width={width/2}
       height={height/2}
@@ -38,14 +24,13 @@ function SendGift() {
          <div>
             <div className='font-extrabold flex justify-center w-full' >
             <span className="text-2xl text-violet-400">
-                 Hello Kioko
+                 Hello {session?.user?.name}
             </span>
             </div>
             <div className=' font-bold flex justify-center w-full mt-9'>
             <span className=" p-3 text-l text-gray-700">
-                 I treasure your work alot......
-                 Drop crypto gifts and tips to any social media account....
-                 Drop crypto gifts and tips to any social media account....
+                 You have Successfully sent {transactionAmount.toString()} USD to {sendTo[0]?.name} through {method}
+                 Check your Twitter Direct Messages for further Information
             </span>
             </div>
             <div className='flex justify-center w-full mt-9'>
@@ -71,8 +56,7 @@ function SendGift() {
             Close
           </Button>
         </Modal.Footer>
-      </Modal>
-    </div>
+        </>
   )
 }
 
